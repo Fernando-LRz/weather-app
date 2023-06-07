@@ -32,10 +32,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         marginHorizontal: 20,
-        height: 100,
+        height: 120,
         backgroundColor: '#0da3a3',
         borderRadius: 20,
-        marginTop: 22
+        marginVertical: 10
     },
     weatherToday: {
         color: 'white',
