@@ -4,7 +4,7 @@ export interface OpenWeatherResponse {
     coord:      Coord;
     weather:    Weather[];
     base:       string;
-    main:       Main;
+    main:       CurrentWeather;
     visibility: number;
     wind:       Wind;
     rain:       Rain;
@@ -26,7 +26,7 @@ export interface Coord {
     lat: number;
 }
 
-export interface Main {
+export interface CurrentWeather {
     temp:       number;
     feels_like: number;
     temp_min:   number;
@@ -35,6 +35,7 @@ export interface Main {
     humidity:   number;
     sea_level:  number;
     grnd_level: number;
+    description: string;
 }
 
 export interface Rain {

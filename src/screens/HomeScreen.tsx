@@ -8,21 +8,26 @@ import CityOption from '../components/CityOption';
 import Loading from '../components/Loading';
 import onlyLettersAndSpaces from '../helpers/onlyLettersAndSpaces';
 
-import { SimpleCity } from '../interfaces/CityInterfaces';
+import { FullCity, SimpleCity } from '../interfaces/CityInterfaces';
 import useCurrentWeather from '../hooks/useCurrentWeather';
 import ErrorMessage from '../components/ErrorMessage';
+import { CurrentWeather } from '../interfaces/WeatherInterfaces';
 
 const HomeScreen = () => {
 
     const [ searchTerm, setSearchTerm ] = useState('');
     const [ onFocus, setOnFocus ] = useState(false);
+
     const [ cities, setCities ] = useState<SimpleCity[]>([]);
     const { getCities, getCity } = useCities();
 
-    const [ city, setCity ] = useState<SimpleCity>({} as SimpleCity);
-    const [ isLoading, setIsLoading ] = useState(true);
     const [ isAnError, setIsAnError ] = useState(false);
 
+    const [ city, setCity ] = useState<FullCity>({} as FullCity);
+    const [ isLoadingCityInfo, setIsLoadingCityInfo ] = useState(true);
+
+    const [ currentWeather, setCurrentWeather ] = useState<CurrentWeather>({} as CurrentWeather);
+    const [ isLoadingWeather, setIsLoadingWeather ] = useState(true);
     const { getWeather } = useCurrentWeather();
 
     const loadCities = async () => {
@@ -38,7 +43,7 @@ const HomeScreen = () => {
 
     const loadCity = async () => {
         const city = await getCity(45418);
-        setIsLoading(false);
+        setIsLoadingCityInfo(false);
 
         if(!city) {
             setIsAnError(true);
@@ -48,9 +53,27 @@ const HomeScreen = () => {
         setCity(city.data);
     }
 
+    const loadCurrentWeather = async (lat: number, lon: number) => {
+        const weather = await getWeather(lat, lon);
+        setIsLoadingWeather(false);
+
+        if(!weather) {
+            setIsAnError(true);
+            return;
+        }
+
+        weather.main.description = weather.weather[0].description;
+        setCurrentWeather(weather.main);
+    }
+
     useEffect(() => {
         loadCity();
     }, []);
+
+    useEffect(() => {
+        if (!city.name) return;
+        loadCurrentWeather(city.latitude, city.longitude);
+    }, [ city ])
 
     useEffect(() => {
 
@@ -66,13 +89,13 @@ const HomeScreen = () => {
 
     }, [ searchTerm ]);
 
-    if(isLoading && !isAnError) {
+    if(isLoadingCityInfo && !isAnError || isLoadingWeather && !isAnError ) {
         return (
             <Loading />
         )
     }
 
-    if(isAnError && !isLoading) {
+    if(isAnError) {
         return (
             <ErrorMessage />
         )
@@ -111,7 +134,12 @@ const HomeScreen = () => {
                             <Text style={ styles.city }>{ city.name }</Text>
                         </View>
 
-                        <WeatherInfo />
+                        <WeatherInfo 
+                            temp={ currentWeather.temp } 
+                            temp_max={ currentWeather.temp_max }
+                            temp_min={ currentWeather.temp_min }
+                            description={ currentWeather.description }
+                        />
                     </View>
                 )}
 

@@ -7,7 +7,7 @@ const useCurrentWeather = () => {
 
         try {
             const response = await OpenWeatherApi.get<OpenWeatherResponse>(`/weather?lat=${lat}&lon=${lon}`);
-            console.log(response)
+            return response.data;
 
         } catch (error) {
             console.error({ error });
