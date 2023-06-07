@@ -4,12 +4,14 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import useDebouncedValue from '../hooks/useDebouncedValue';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Keyboard } from 'react-native';
 
 interface Props {
     onDebounce: (value: string) => void;
+    onFocus: (value: boolean) => void;
 };
 
-const SearchCityInput = ({ onDebounce }: Props) => {
+const SearchCityInput = ({ onDebounce, onFocus }: Props) => {
 
     const [ search, setSearch ] = useState('');
     const { debouncedValue } = useDebouncedValue( search );
@@ -30,6 +32,8 @@ const SearchCityInput = ({ onDebounce }: Props) => {
                     }}
                     value={ search }
                     onChangeText={ setSearch }
+                    onFocus={ () => onFocus(true) }
+                    onBlur={ () => onFocus(false) }
                 />
                 <Icon 
                     name="search-outline"

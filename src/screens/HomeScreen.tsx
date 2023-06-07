@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import useCities from '../hooks/useCities';
 import SearchCityInput from '../components/SearchCityInput';
 import WeatherInfo from '../components/WeatherInfo';
+import CityOption from '../components/CityOption';
 import onlyLettersAndSpaces from '../helpers/onlyLettersAndSpaces';
 
 import { City } from '../interfaces/CityInterfaces';
@@ -11,6 +12,7 @@ import { City } from '../interfaces/CityInterfaces';
 const HomeScreen = () => {
 
     const [ searchTerm, setSearchTerm ] = useState('');
+    const [ onFocus, setOnFocus ] = useState(false);
     const [ cities, setCities ] = useState<City[]>([]);
     const { getCities } = useCities();
 
@@ -34,21 +36,39 @@ const HomeScreen = () => {
             console.log('El término de búsqueda no es válido');
 
         } else {
-            loadCities()
+            loadCities();
         }
 
     }, [ searchTerm ]);
 
     return (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-            <SearchCityInput onDebounce={ (value) => setSearchTerm( value ) }/>
+        <View style={{ flex: 1, backgroundColor: '#ebebeb'}}>
+            
+            <SearchCityInput 
+                onDebounce={ setSearchTerm }
+                onFocus={ setOnFocus }
+            />
 
-            <View style={ styles.header }>
-                <Text style={ styles.title }>New York</Text>
-                <Text style={ styles.subtitle }>Today</Text>
-            </View>
+            {/* cities */}
+            { onFocus && (
+                <View>
+                    <CityOption />
+                    <CityOption />
+                </View>  
+            )}
 
-            <WeatherInfo />
+            {/* weather info */}
+            { !onFocus && (
+                <View>
+                    <View style={ styles.header }>
+                        <Text style={ styles.title }>New York</Text>
+                        <Text style={ styles.subtitle }>Today</Text>
+                    </View>
+
+                    <WeatherInfo />
+                </View>
+            )}
+            
         </View>
     );
 };
