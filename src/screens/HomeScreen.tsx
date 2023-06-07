@@ -42,7 +42,7 @@ const HomeScreen = () => {
     }
 
     const loadCity = async () => {
-        const city = await getCity(45418);
+        const city = await getCity(3361370);
         setIsLoadingCityInfo(false);
 
         if(!city) {
@@ -62,7 +62,11 @@ const HomeScreen = () => {
             return;
         }
 
+        const iconUri = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
+
         weather.main.description = weather.weather[0].description;
+        weather.main.icon = iconUri;
+        
         setCurrentWeather(weather.main);
     }
 
@@ -139,6 +143,7 @@ const HomeScreen = () => {
                             temp_max={ currentWeather.temp_max }
                             temp_min={ currentWeather.temp_min }
                             description={ currentWeather.description }
+                            icon={ currentWeather.icon }
                         />
                     </View>
                 )}

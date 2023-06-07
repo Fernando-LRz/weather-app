@@ -36,6 +36,7 @@ export interface CurrentWeather {
     sea_level:  number;
     grnd_level: number;
     description: string;
+    icon: string;
 }
 
 export interface Rain {

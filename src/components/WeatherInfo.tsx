@@ -1,25 +1,32 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
-import Icon from 'react-native-vector-icons/Ionicons';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
 interface Props {
     temp: number;
     temp_min:   number;
     temp_max:   number;
     description: string;
+    icon: string;
 }
 
-const WeatherCard = ( { temp, temp_max, temp_min, description }: Props ) => {
+const WeatherCard = ( { temp, temp_max, temp_min, description, icon }: Props ) => {
     return ( 
         <View style={ styles.container }>
-            <Icon name="thunderstorm-outline" size={ 100 } color="#444"/>
+            <Image 
+                source={{ uri: icon }} 
+                style={{ 
+                    height: 190,
+                    width: 190,
+                    borderRadius: 50,
+                    backgroundColor: '#aaadad'
+                }}
+            />
 
-            <Text style={ styles.weatherToday }>{ Math.round(temp) }°K</Text>
+            <Text style={ styles.weatherToday }>{ Math.round(temp) }°C</Text>
             <View style={ styles.separator }/>
             <Text style={ styles.weatherDescription }>{ description }</Text>
             <Text style={ styles.min_max }>
-                { Math.round(temp_min) }°K <Text style={ styles.min }>min</Text> / { Math.round(temp_max) }°K <Text style={ styles.max }>max</Text>
+                { Math.round(temp_min) }°C <Text style={ styles.min }>min</Text> / { Math.round(temp_max) }°C <Text style={ styles.max }>max</Text>
             </Text>
         </View>
     );
