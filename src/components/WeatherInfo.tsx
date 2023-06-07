@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props {
     temp: number;
@@ -10,17 +12,28 @@ interface Props {
 }
 
 const WeatherCard = ( { temp, temp_max, temp_min, description, icon }: Props ) => {
+
     return ( 
         <View style={ styles.container }>
-            <Image 
-                source={{ uri: icon }} 
-                style={{ 
-                    height: 190,
-                    width: 190,
-                    borderRadius: 50,
-                    backgroundColor: '#aaadad'
-                }}
-            />
+
+            { icon ? (
+                <Image 
+                    source={{ uri: icon }} 
+                    style={{ 
+                        height: 190,
+                        width: 190,
+                        borderRadius: 60,
+                        backgroundColor: '#bdbdbd'
+                    }}
+                />
+                ): (
+                    <TouchableOpacity
+                        activeOpacity={ 0.5 }
+                    >
+                        <Icon name="reload-circle-outline" size={ 80 } color="black"/>
+                    </TouchableOpacity>
+                )
+            }
 
             <Text style={ styles.weatherToday }>{ Math.round(temp) }°C</Text>
             <View style={ styles.separator }/>

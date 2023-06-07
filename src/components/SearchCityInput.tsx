@@ -4,7 +4,6 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import useDebouncedValue from '../hooks/useDebouncedValue';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Keyboard } from 'react-native';
 
 interface Props {
     onDebounce: (value: string) => void;
