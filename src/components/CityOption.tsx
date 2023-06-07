@@ -3,15 +3,22 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const CityOption = () => {
+interface Props {
+    name: string;
+    country: string;
+    region: string;
+}
+
+const CityOption = ({ name, country, region }: Props) => {
     return (
         <TouchableOpacity 
             style={ styles.card }
             activeOpacity={ 0.8 }
         >
-            <View>
+            <View style={{ width: '65%' }}>
                 <Text style={ styles.weatherToday }>23°C</Text>
-                <Text style={ styles.cityName }>Guadalajara</Text>
+                <Text style={ styles.country_region }>{ country } - { region }</Text>
+                <Text style={ styles.city }>{ name }</Text>
             </View>
 
             <Icon name="thunderstorm-outline" size={ 62 } color="white"/>
@@ -26,7 +33,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 20,
         height: 100,
-        // backgroundColor: '#b907e6',
         backgroundColor: '#0da3a3',
         borderRadius: 20,
         marginTop: 22
@@ -36,10 +42,15 @@ const styles = StyleSheet.create({
         fontSize: 35,
         fontWeight: '400'
     },
-    cityName: {
+    country_region: {
         color: 'white',
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    city: {
+        color: 'white',
+        fontSize: 17,
+        fontWeight: '500'
     }
 });
 

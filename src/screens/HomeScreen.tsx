@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 import useCities from '../hooks/useCities';
 import SearchCityInput from '../components/SearchCityInput';
@@ -16,6 +16,8 @@ const HomeScreen = () => {
     const [ cities, setCities ] = useState<City[]>([]);
     const { getCities } = useCities();
 
+    const [ city, setCity ] = useState<City>({} as City);
+
     const loadCities = async () => {
         const cities = await getCities(searchTerm);
 
@@ -27,13 +29,28 @@ const HomeScreen = () => {
         setCities(cities);
     }
 
+    const loadDefaultCity = async () => {
+        const cities = await getCities('Chicago');
+
+        if(!cities || cities.length === 0) {
+            setCities([]);
+            return;
+        }
+    
+        setCity(cities[0]);
+    }
+
+    useEffect(() => {
+        loadDefaultCity();
+    }, []);
+
     useEffect(() => {
 
         if( searchTerm.length === 0 ) {
-            console.log('El término de búsqueda está vacío');
+            setCities([]);
 
         } else if( !onlyLettersAndSpaces(searchTerm) ) {
-            console.log('El término de búsqueda no es válido');
+            setCities([]);
 
         } else {
             loadCities();
@@ -49,26 +66,36 @@ const HomeScreen = () => {
                 onFocus={ setOnFocus }
             />
 
-            {/* cities */}
-            { onFocus && (
-                <View>
-                    <CityOption />
-                    <CityOption />
-                </View>  
-            )}
+            <ScrollView>
+                {/* cities */}
+                { (onFocus && cities.length > 0) && (
+                    
+                    cities.map((city) => {
+                        return (
+                            <CityOption 
+                                name={ city.name } 
+                                country={ city.countryCode } 
+                                region={ city.region }
+                                key={ city.id }
+                            />
+                        )
+                    }) 
+                )}
 
-            {/* weather info */}
-            { !onFocus && (
-                <View>
-                    <View style={ styles.header }>
-                        <Text style={ styles.title }>New York</Text>
-                        <Text style={ styles.subtitle }>Today</Text>
+                {/* weather info */}
+                { !onFocus && (
+                    <View>
+                        <View style={ styles.header }>
+                            <Text style={ styles.title }>New York</Text>
+                            <Text style={ styles.subtitle }>Today</Text>
+                        </View>
+
+                        <WeatherInfo />
                     </View>
+                )}
 
-                    <WeatherInfo />
-                </View>
-            )}
-            
+        </ScrollView>
+        
         </View>
     );
 };

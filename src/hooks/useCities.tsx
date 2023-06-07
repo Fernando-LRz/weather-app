@@ -6,7 +6,7 @@ const useCities = () => {
     const getCities = async ( search: string ) => {
 
         try {
-            const response = await GeoDBApi.get<CitiesGeoDBResponse>(`/cities?namePrefix=${search}&limit=2`);
+            const response = await GeoDBApi.get<CitiesGeoDBResponse>(`/cities?namePrefix=${search}`);
             return [...response.data.data]
 
         } catch (error) {
