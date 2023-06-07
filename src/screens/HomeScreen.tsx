@@ -1,22 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
+import useCities from '../hooks/useCities';
 import SearchCityInput from '../components/SearchCityInput';
 import WeatherInfo from '../components/WeatherInfo';
 import onlyLettersAndSpaces from '../helpers/onlyLettersAndSpaces';
 
+import { City } from '../interfaces/CityInterfaces';
+
 const HomeScreen = () => {
 
     const [ searchTerm, setSearchTerm ] = useState('');
+    const [ cities, setCities ] = useState<City[]>([]);
+    const { getCities } = useCities();
+
+    const loadCities = async () => {
+        const cities = await getCities(searchTerm);
+
+        if(!cities || cities.length === 0) {
+            setCities([]);
+            return;
+        }
+    
+        setCities(cities);
+    }
 
     useEffect(() => {
 
         if( searchTerm.length === 0 ) {
-            // console.log('Término de búsqueda vacío...')
+            console.log('El término de búsqueda está vacío');
+
         } else if( !onlyLettersAndSpaces(searchTerm) ) {
-            // console.log('El término de búsqueda no es válido');
+            console.log('El término de búsqueda no es válido');
+
         } else {
-            // console.log('Buscando: ', searchTerm, '...');
+            loadCities()
         }
 
     }, [ searchTerm ]);

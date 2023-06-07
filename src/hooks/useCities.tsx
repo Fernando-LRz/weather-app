@@ -1,13 +1,16 @@
-import GeoDBApi from "../api/GeoDBApi";
+import { CitiesGeoDBResponse } from '../interfaces/CityInterfaces';
+import GeoDBApi from '../api/GeoDBApi';
 
 const useCities = () => {
 
     const getCities = async ( search: string ) => {
+
         try {
-            const response = await GeoDBApi.get(`/cities?namePrefix=${search}&limit=3`);
-            console.log(response.data);
+            const response = await GeoDBApi.get<CitiesGeoDBResponse>(`/cities?namePrefix=${search}&limit=2`);
+            return [...response.data.data]
+
         } catch (error) {
-            console.error(error);
+            console.error({error});
         }
     };
 
