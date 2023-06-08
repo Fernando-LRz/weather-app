@@ -4,16 +4,19 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props {
+    id: number;
     name: string;
     country: string;
     region: string;
+    setCity: (id: number) => void;
 }
 
-const CityOption = ({ name, country, region }: Props) => {
+const CityOption = ({ id, name, country, region, setCity }: Props) => {
     return (
         <TouchableOpacity 
             style={ styles.card }
-            activeOpacity={ 0.8 }
+            activeOpacity={ 0.7 } 
+            onPress={ () => setCity(id) }
         >
             <View style={{ width: '65%' }}>
                 <Text style={ styles.weatherToday }>23°C</Text>

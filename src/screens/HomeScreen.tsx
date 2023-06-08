@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 
 import useCities from '../hooks/useCities';
+import useCurrentWeather from '../hooks/useCurrentWeather';
+import ErrorMessage from '../components/ErrorMessage';
 import SearchCityInput from '../components/SearchCityInput';
 import WeatherInfo from '../components/WeatherInfo';
 import CityOption from '../components/CityOption';
@@ -9,8 +11,6 @@ import Loading from '../components/Loading';
 import onlyLettersAndSpaces from '../helpers/onlyLettersAndSpaces';
 
 import { FullCity, SimpleCity } from '../interfaces/CityInterfaces';
-import useCurrentWeather from '../hooks/useCurrentWeather';
-import ErrorMessage from '../components/ErrorMessage';
 import { CurrentWeather } from '../interfaces/WeatherInterfaces';
 
 const HomeScreen = () => {
@@ -40,8 +40,8 @@ const HomeScreen = () => {
         setCities(cities);
     }
 
-    const loadCity = async () => {
-        const city = await getCity(3453102);
+    const loadCity = async (id: number = 3453102) => {
+        const city = await getCity(id);
         setIsLoadingCityInfo(false);
 
         if(!city) {
@@ -50,6 +50,13 @@ const HomeScreen = () => {
         }
         
         setCity(city.data);
+    }
+
+    const loadNewCity = async (id: number) => {
+        setIsLoadingCityInfo(true);
+        setIsLoadingWeather(true);
+
+        loadCity(id);
     }
 
     const loadCurrentWeather = async (lat: number, lon: number) => {
@@ -127,14 +134,16 @@ const HomeScreen = () => {
             <ScrollView>
                 {/* cities */}
                 <View style={{ marginTop: 10 }}>
-                    { (onFocus && cities.length > 0) && (
-                        
+                    { ( onFocus || cities.length > 0 ) && (
+
                         cities.map((city) => {
                             return (
                                 <CityOption 
+                                    id={ city.id }
                                     name={ city.name } 
                                     country={ city.countryCode } 
                                     region={ city.region }
+                                    setCity={ loadNewCity }
                                     key={ city.id }
                                 />
                             )
@@ -143,7 +152,7 @@ const HomeScreen = () => {
                 </View>
 
                 {/* weather info */}
-                { !onFocus && (
+                { ( !onFocus && cities.length === 0 ) && (
                     <View>
                         <View style={ styles.header }>
                             <Text style={ styles.country_region }>{ city.countryCode } - { city.region }</Text>
