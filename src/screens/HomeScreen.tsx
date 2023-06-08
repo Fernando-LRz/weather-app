@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 
 import useCities from '../hooks/useCities';
 import SearchCityInput from '../components/SearchCityInput';
@@ -19,6 +19,7 @@ const HomeScreen = () => {
     const [ onFocus, setOnFocus ] = useState(false);
 
     const [ cities, setCities ] = useState<SimpleCity[]>([]);
+    const [ isLoadingCities, setIsLoadingCities ] = useState(false);
     const { getCities, getCity } = useCities();
 
     const [ isAnError, setIsAnError ] = useState(false);
@@ -32,17 +33,15 @@ const HomeScreen = () => {
 
     const loadCities = async () => {
         const cities = await getCities(searchTerm);
+        setIsLoadingCities(false);
 
-        if(!cities || cities.length === 0) {
-            setCities([]);
-            return;
-        }
+        if(!cities || cities.length === 0) return;
     
         setCities(cities);
     }
 
     const loadCity = async () => {
-        const city = await getCity(3361370);
+        const city = await getCity(3453102);
         setIsLoadingCityInfo(false);
 
         if(!city) {
@@ -81,15 +80,12 @@ const HomeScreen = () => {
 
     useEffect(() => {
 
-        if( searchTerm.length === 0 ) {
-            setCities([]);
+        setCities([]);
 
-        } else if( !onlyLettersAndSpaces(searchTerm) ) {
-            setCities([]);
+        if( searchTerm.length === 0 || !onlyLettersAndSpaces(searchTerm)) return;
 
-        } else {
-            loadCities();
-        }
+        setIsLoadingCities(true);
+        loadCities();
 
     }, [ searchTerm ]);
 
@@ -111,6 +107,22 @@ const HomeScreen = () => {
                 onDebounce={ setSearchTerm }
                 onFocus={ setOnFocus }
             />
+
+            {
+                isLoadingCities && (
+                    <View style={{
+                        position: 'absolute',
+                        height: '100%',
+                        width: '100%',
+                        justifyContent: 'center'
+                    }}>
+                        <ActivityIndicator 
+                            size={ 40 } 
+                            color="#5856D6"
+                        />
+                    </View>
+                )
+            }
 
             <ScrollView>
                 {/* cities */}
