@@ -12,6 +12,7 @@ import onlyLettersAndSpaces from '../helpers/onlyLettersAndSpaces';
 
 import { FullCity, SimpleCity } from '../interfaces/CityInterfaces';
 import { CurrentWeather } from '../interfaces/WeatherInterfaces';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
 
@@ -41,6 +42,10 @@ const HomeScreen = () => {
     }
 
     const loadCity = async (id: number = 3453102) => {
+
+        const cityId = await AsyncStorage.getItem('cityId');
+        if(cityId) id = Number(cityId);
+
         const city = await getCity(id);
         setIsLoadingCityInfo(false);
 
@@ -56,7 +61,9 @@ const HomeScreen = () => {
         setIsLoadingCityInfo(true);
         setIsLoadingWeather(true);
 
-        loadCity(id);
+        await AsyncStorage.setItem('cityId', id.toString());
+
+        loadCity();
     }
 
     const loadCurrentWeather = async (lat: number, lon: number) => {
