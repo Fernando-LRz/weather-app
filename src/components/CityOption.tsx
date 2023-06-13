@@ -8,6 +8,7 @@ interface Props {
     name: string;
     country: string;
     region: string;
+    temp: number;
     setCity: (id: number) => void;
 }
 
@@ -19,7 +20,7 @@ const CityOption = ({ id, name, country, region, setCity }: Props) => {
             onPress={ () => setCity(id) }
         >
             <View style={{ width: '65%' }}>
-                <Text style={ styles.weatherToday }>23°C</Text>
+                <Text style={ styles.weatherToday }>30°C</Text>
                 <Text style={ styles.country_region }>{ country } - { region }</Text>
                 <Text style={ styles.city }>{ name }</Text>
             </View>

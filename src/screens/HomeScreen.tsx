@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import useCities from '../hooks/useCities';
 import useCurrentWeather from '../hooks/useCurrentWeather';
@@ -12,7 +13,6 @@ import onlyLettersAndSpaces from '../helpers/onlyLettersAndSpaces';
 
 import { FullCity, SimpleCity } from '../interfaces/CityInterfaces';
 import { CurrentWeather } from '../interfaces/WeatherInterfaces';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
 
@@ -21,6 +21,7 @@ const HomeScreen = () => {
 
     const [ cities, setCities ] = useState<SimpleCity[]>([]);
     const [ isLoadingCities, setIsLoadingCities ] = useState(false);
+
     const { getCities, getCity } = useCities();
 
     const [ isAnError, setIsAnError ] = useState(false);
@@ -34,15 +35,18 @@ const HomeScreen = () => {
 
     const loadCities = async () => {
         const cities = await getCities(searchTerm);
-        setIsLoadingCities(false);
-
         if(!cities || cities.length === 0) return;
-    
+
         setCities(cities);
     }
 
-    const loadCity = async (id: number = 3453102) => {
+    useEffect(() => {
+        if(cities.length === 0 || !isLoadingCities) return;
+        setIsLoadingCities(false);
 
+    }, [ cities ]);
+
+    const loadDefaultCity = async (id: number = 3453102) => {
         const cityId = await AsyncStorage.getItem('cityId');
         if(cityId) id = Number(cityId);
 
@@ -63,10 +67,10 @@ const HomeScreen = () => {
 
         await AsyncStorage.setItem('cityId', id.toString());
 
-        loadCity();
+        loadDefaultCity();
     }
 
-    const loadCurrentWeather = async (lat: number, lon: number) => {
+    const loadDefaultCityCurrentWeather = async (lat: number, lon: number) => {
         const weather = await getWeather(lat, lon);
         setIsLoadingWeather(false);
 
@@ -84,18 +88,17 @@ const HomeScreen = () => {
     }
 
     useEffect(() => {
-        loadCity();
+        loadDefaultCity();
     }, []);
 
     useEffect(() => {
         if (!city.name) return;
-        loadCurrentWeather(city.latitude, city.longitude);
+        loadDefaultCityCurrentWeather(city.latitude, city.longitude);
     }, [ city ])
 
     useEffect(() => {
-
         setCities([]);
-
+        
         if( searchTerm.length === 0 || !onlyLettersAndSpaces(searchTerm)) return;
 
         setIsLoadingCities(true);
@@ -141,19 +144,22 @@ const HomeScreen = () => {
             <ScrollView>
                 {/* cities */}
                 <View style={{ marginTop: 10 }}>
-                    { ( onFocus || cities.length > 0 ) && (
+                    { ( (onFocus || cities.length > 0) && ( !isLoadingCities ) ) && (
 
-                        cities.map((city) => {
+                        cities.map((city, index) => {
                             return (
                                 <CityOption 
                                     id={ city.id }
                                     name={ city.name } 
+                                    // temp={ citiesWeather[index].main.temp }
+                                    temp={ 20 }
                                     country={ city.countryCode } 
                                     region={ city.region }
                                     setCity={ loadNewCity }
                                     key={ city.id }
                                 />
                             )
+
                         }) 
                     )}
                 </View>
