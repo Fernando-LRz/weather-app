@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import useCities from '../hooks/useCities';
@@ -98,8 +98,8 @@ const HomeScreen = () => {
 
     useEffect(() => {
         setCities([]);
-        
-        if( searchTerm.length === 0 || !onlyLettersAndSpaces(searchTerm)) return;
+   
+        if( !searchTerm || !onlyLettersAndSpaces(searchTerm)) return;
 
         setIsLoadingCities(true);
         loadCities();
@@ -144,24 +144,43 @@ const HomeScreen = () => {
             <ScrollView>
                 {/* cities */}
                 <View style={{ marginTop: 10 }}>
-                    { ( (onFocus || cities.length > 0) && ( !isLoadingCities ) ) && (
-
-                        cities.map((city, index) => {
-                            return (
-                                <CityOption 
-                                    id={ city.id }
-                                    name={ city.name } 
-                                    // temp={ citiesWeather[index].main.temp }
-                                    temp={ 20 }
-                                    country={ city.countryCode } 
-                                    region={ city.region }
-                                    setCity={ loadNewCity }
-                                    key={ city.id }
-                                />
-                            )
-
-                        }) 
-                    )}
+                    {
+                        (( onFocus || cities.length > 0 ) && ( !isLoadingCities )) && (
+                            cities.map((city, index) => {
+                                return (
+                                    <CityOption 
+                                        id={ city.id }
+                                        name={ city.name } 
+                                        country={ city.countryCode } 
+                                        region={ city.region }
+                                        lat={ city.latitude }
+                                        lon={ city.longitude }
+                                        setCity={ loadNewCity }
+                                        key={ city.id + index }
+                                    />
+                                )
+                            }
+                        ))
+                    }
+                    {
+                        (( cities.length > 0 ) && ( !isLoadingCities )) && (
+                            <View 
+                                style={{ 
+                                    alignItems: 'center', 
+                                    marginTop: 50, 
+                                    marginBottom: 40 
+                                }}
+                            >
+                                <TouchableOpacity 
+                                    style={ styles.button }
+                                    activeOpacity={ 0.8 }
+                                    onPress={ () => setSearchTerm('') }
+                                >
+                                    <Text style={ styles.textButton }>Back</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    }
                 </View>
 
                 {/* weather info */}
@@ -203,6 +222,19 @@ const styles = StyleSheet.create({
         color: '#555',
         marginTop: 5,
         marginBottom: 25
+    },
+    textButton: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white'
+    },
+    button: {
+        backgroundColor: '#5856D6', 
+        height: 50, 
+        width: '40%',
+        borderRadius: 20 ,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 

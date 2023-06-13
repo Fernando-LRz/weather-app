@@ -26,9 +26,7 @@ const SearchCityInput = ({ onDebounce, onFocus }: Props) => {
                     placeholder="Search City..."
                     autoCapitalize="none"
                     autoCorrect={ false }
-                    style={{ 
-                        ...styles.inputText,
-                    }}
+                    style={ styles.inputText }
                     value={ search }
                     onChangeText={ setSearch }
                     onFocus={ () => onFocus(true) }
@@ -69,8 +67,8 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     inputText: {
-        flex: 1,
-        fontSize: 18
+        fontSize: 18,
+        flex: 1
     }
 });
 

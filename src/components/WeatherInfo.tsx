@@ -29,7 +29,8 @@ const WeatherCard = ( { temp, temp_max, temp_min, description, icon }: Props ) =
                         size={ 50 } 
                         color="#5856D6" 
                         style={{
-                            height: 190
+                            height: 190,
+                            width: 190
                         }}
                     />
                 )
