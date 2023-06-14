@@ -44,8 +44,8 @@ const SearchCityInput = ({ onDebounce, onFocus }: Props) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 20,
-        marginTop: 20
+        marginTop: 25,
+        marginHorizontal: 20
     },
     backgroundText: {
         flexDirection: 'row',

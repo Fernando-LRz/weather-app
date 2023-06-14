@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
+
+import useWeatherApp from '../hooks/useWeatherApp';
 
 import ErrorMessage from '../components/ErrorMessage';
 import SearchCityInput from '../components/SearchCityInput';
@@ -7,7 +9,7 @@ import WeatherInfo from '../components/WeatherInfo';
 import CityOption from '../components/CityOption';
 import Loading from '../components/Loading';
 
-import useWeatherApp from '../hooks/useWeatherApp';
+import homeTheme from '../theme/homeTheme';
 
 const HomeScreen = () => {
 
@@ -55,12 +57,30 @@ const HomeScreen = () => {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: '#ebebeb' }}>
-            <SearchCityInput 
-                onDebounce={ setSearchTerm }
-                onFocus={ setOnFocus }
-            />
+        <View style={{ flex: 1, backgroundColor: '#271c4f' }}>
 
+            <View style={ homeTheme.header }>
+                <SearchCityInput 
+                    onDebounce={ setSearchTerm }
+                    onFocus={ setOnFocus }
+                />
+                <Text style={ homeTheme.headerCityName }>{ city.name }</Text>
+                <Text style={ homeTheme.headerTemp }>{ currentWeather.main.temp }°C | { currentWeather.main.description }</Text>
+            </View>
+
+            <View style={ homeTheme.infoBox }>
+                <Text style={ homeTheme.infoBoxTitle }>WIND INFORMATION</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
+                    <Text style={ homeTheme.infoBoxLabel }>- Speed</Text>
+                    <Text style={ homeTheme.infoBoxLabel }>{ currentWeather.wind.speed } meter/sec</Text>
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
+                    <Text style={ homeTheme.infoBoxLabel }>- Direction</Text>
+                    <Text style={ homeTheme.infoBoxLabel }>{ currentWeather.wind.deg }°</Text>
+                </View>
+            </View>
+
+            {/* loading cities */}
             {
                 isLoadingCities && (
                     <View style={{
@@ -108,11 +128,10 @@ const HomeScreen = () => {
                                 }}
                             >
                                 <TouchableOpacity 
-                                    style={ styles.button }
                                     activeOpacity={ 0.8 }
                                     onPress={ () => setSearchTerm('') }
                                 >
-                                    <Text style={ styles.textButton }>Back</Text>
+                                    <Text>Back</Text>
                                 </TouchableOpacity>
                             </View>
                         )
@@ -122,17 +141,17 @@ const HomeScreen = () => {
                 {/* weather info */}
                 { ( !onFocus && cities.length === 0 ) && (
                     <View>
-                        <View style={ styles.header }>
-                            <Text style={ styles.country_region }>{ city.countryCode } - { city.region }</Text>
-                            <Text style={ styles.city }>{ city.name }</Text>
+                        <View>
+                            <Text>{ city.countryCode } - { city.region }</Text>
+                            <Text>{ city.name }</Text>
                         </View>
 
                         <WeatherInfo 
-                            temp={ currentWeather.temp } 
-                            temp_max={ currentWeather.temp_max }
-                            temp_min={ currentWeather.temp_min }
-                            description={ currentWeather.description }
-                            icon={ currentWeather.icon }
+                            temp={ currentWeather.main.temp } 
+                            temp_max={ currentWeather.main.temp_max }
+                            temp_min={ currentWeather.main.temp_min }
+                            description={ currentWeather.main.description }
+                            icon={ currentWeather.main.icon }
                         />
                     </View>
                 )}
@@ -141,37 +160,5 @@ const HomeScreen = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    header: {
-        marginTop: 25,
-        alignItems: 'center'
-    },
-    country_region: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        color: 'black'
-    },
-    city: {
-        fontSize: 25,
-        fontWeight: '500',
-        color: '#555',
-        marginTop: 5,
-        marginBottom: 25
-    },
-    textButton: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'white'
-    },
-    button: {
-        backgroundColor: '#5856D6', 
-        height: 50, 
-        width: '40%',
-        borderRadius: 20 ,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-});
 
 export default HomeScreen;

@@ -6,7 +6,7 @@ import useCurrentWeather from '../hooks/useCurrentWeather';
 import onlyLettersAndSpaces from '../helpers/onlyLettersAndSpaces';
 
 import { FullCity, SimpleCity } from '../interfaces/CityInterfaces';
-import { CurrentWeather } from '../interfaces/WeatherInterfaces';
+import { OpenWeatherResponse } from '../interfaces/WeatherInterfaces';
 
 const useWeatherApp = () => {
     const [ cities, setCities ] = useState<SimpleCity[]>([]);
@@ -19,7 +19,7 @@ const useWeatherApp = () => {
     const [ city, setCity ] = useState<FullCity>({} as FullCity);
     const [ isLoadingCityInfo, setIsLoadingCityInfo ] = useState(true);
 
-    const [ currentWeather, setCurrentWeather ] = useState<CurrentWeather>({} as CurrentWeather);
+    const [ currentWeather, setCurrentWeather ] = useState<OpenWeatherResponse>({} as OpenWeatherResponse);
     const [ isLoadingWeather, setIsLoadingWeather ] = useState(true);
     const { getWeather } = useCurrentWeather();
 
@@ -79,7 +79,7 @@ const useWeatherApp = () => {
         weather.main.description = weather.weather[0].description;
         weather.main.icon = iconUri;
         
-        setCurrentWeather(weather.main);
+        setCurrentWeather(weather);
     }
 
     return {
