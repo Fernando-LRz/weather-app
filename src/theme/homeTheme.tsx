@@ -3,8 +3,8 @@ import { StyleSheet } from 'react-native';
 const homeTheme = StyleSheet.create({
     header: {
         backgroundColor: '#12083b',
-        borderBottomLeftRadius: 8,
-        borderBottomRightRadius: 8
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
     },
     headerCityName: {
         textAlign: 'center',
@@ -22,16 +22,16 @@ const homeTheme = StyleSheet.create({
         marginBottom: 25
     },
     infoBoxTitle: {
-        fontSize: 16,
+        fontSize: 18,
         color: '#b7b5ba'
     },
     infoBoxLabel: {
-        fontSize: 18,
+        fontSize: 19,
         color: '#b7b5ba',
         fontWeight: '700'
     },
     infoBoxData: {
-        fontSize: 18,
+        fontSize: 25,
         color: '#b7b5ba',
         fontWeight: '500',
     },

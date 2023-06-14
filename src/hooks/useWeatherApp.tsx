@@ -24,9 +24,18 @@ const useWeatherApp = () => {
     const { getWeather } = useCurrentWeather();
 
     useEffect(() => {
+        if (!city.name) return;
+        setIsLoadingCityInfo(false);
+    }, [ city ])
+
+    useEffect(() => {
+        if (!currentWeather.main) return;
+        setIsLoadingWeather(false);
+    }, [ currentWeather ])
+
+    useEffect(() => {
         if(cities.length === 0 || !isLoadingCities) return;
         setIsLoadingCities(false);
-
     }, [ cities ]);
 
     const loadCities = async (searchTerm: string) => {
@@ -46,7 +55,6 @@ const useWeatherApp = () => {
         if(cityId) id = Number(cityId);
 
         const city = await getCity(id);
-        setIsLoadingCityInfo(false);
 
         if(!city) {
             setIsAnError(true);
@@ -67,17 +75,11 @@ const useWeatherApp = () => {
 
     const loadDefaultCityCurrentWeather = async (lat: number, lon: number) => {
         const weather = await getWeather(lat, lon);
-        setIsLoadingWeather(false);
 
         if(!weather) {
             setIsAnError(true);
             return;
         }
-
-        const iconUri = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
-
-        weather.main.description = weather.weather[0].description;
-        weather.main.icon = iconUri;
         
         setCurrentWeather(weather);
     }

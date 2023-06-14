@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Image, Text, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
+
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import useWeatherApp from '../hooks/useWeatherApp';
 
 import ErrorMessage from '../components/ErrorMessage';
 import SearchCityInput from '../components/SearchCityInput';
-import WeatherInfo from '../components/WeatherInfo';
 import CityOption from '../components/CityOption';
 import Loading from '../components/Loading';
 
@@ -57,28 +58,122 @@ const HomeScreen = () => {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: '#271c4f' }}>
+        <View style={{ 
+            flex: 1, 
+            backgroundColor: '#271c4f'
+        }}>
+            {   
+                onFocus && (
+                    <SearchCityInput 
+                        onDebounce={ setSearchTerm }
+                        onFocus={ setOnFocus }
+                    />
+                )
+            }
 
-            <View style={ homeTheme.header }>
-                <SearchCityInput 
-                    onDebounce={ setSearchTerm }
-                    onFocus={ setOnFocus }
-                />
-                <Text style={ homeTheme.headerCityName }>{ city.name }</Text>
-                <Text style={ homeTheme.headerTemp }>{ currentWeather.main.temp }°C | { currentWeather.main.description }</Text>
-            </View>
+            {
+                ( !onFocus && cities.length === 0 ) && (
+                    <>
+                        {/* HEADER */}
+                        <View style={ homeTheme.header }>
+                            <Text style={ homeTheme.headerCityName }>{ city.name }</Text>
+                            <Text style={ homeTheme.headerTemp }>{ currentWeather.main.temp }°C | { currentWeather.weather[0].description }</Text>
+                            <TouchableOpacity
+                                activeOpacity={ 0.8 }
+                                style={{ 
+                                    position: 'absolute',
+                                    right: 10,
+                                    top: 10
+                                }}
+                                onPress={ () => setOnFocus(true) }
+                            >
+                                <Icon 
+                                    name="search-outline"
+                                    color="#a4a1ab"
+                                    size={ 30 }
+                                />
+                            </TouchableOpacity>
+                        </View>
 
-            <View style={ homeTheme.infoBox }>
-                <Text style={ homeTheme.infoBoxTitle }>WIND INFORMATION</Text>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
-                    <Text style={ homeTheme.infoBoxLabel }>- Speed</Text>
-                    <Text style={ homeTheme.infoBoxLabel }>{ currentWeather.wind.speed } meter/sec</Text>
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
-                    <Text style={ homeTheme.infoBoxLabel }>- Direction</Text>
-                    <Text style={ homeTheme.infoBoxLabel }>{ currentWeather.wind.deg }°</Text>
-                </View>
-            </View>
+                        {/* TEMPERATURE */}
+                        <View style={ homeTheme.infoBox }>
+                            <Text style={ homeTheme.infoBoxTitle }>TEMPERATURE</Text>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={{ flex: 1, marginRight: 25 }}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
+                                        <Text style={ homeTheme.infoBoxLabel }>- Min</Text>
+                                        <Text style={ homeTheme.infoBoxData }>{ currentWeather.main.temp_min }°C</Text>
+                                    </View>
+
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
+                                        <Text style={ homeTheme.infoBoxLabel }>- Max</Text>
+                                        <Text style={ homeTheme.infoBoxData }>{ currentWeather.main.temp_max }°C</Text>
+                                    </View>
+                                </View>
+
+                                <Image 
+                                    source={{ uri: `https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}@2x.png` }} 
+                                    style={{ 
+                                        height: 85,
+                                        width: 65
+                                    }}
+                                />
+                            </View>
+                        </View>
+
+                        {/* HUMITY & VISIBILITY */}
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={{ ...homeTheme.infoBox, flex: 1, paddingVertical: 30 }}>
+                                <Text style={ homeTheme.infoBoxTitle }>HUMIDITY</Text>
+                                <View style={{ flexDirection: 'row', marginTop: 3 }}>
+                                    <Text style={ homeTheme.infoBoxData }>{ currentWeather.main.humidity }%</Text>
+                                </View>
+                            </View>
+
+                            <View style={{ ...homeTheme.infoBox, flex: 1, paddingVertical: 30 }}>
+                                <Text style={ homeTheme.infoBoxTitle }>VISIBILITY</Text>
+                                <View style={{ flexDirection: 'row', marginTop: 3 }}>
+                                    <Text style={ homeTheme.infoBoxData }>{ (currentWeather.visibility) / 1000 } KM</Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        {/* PRESSURE  & CLOUDINESS */}
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={{ ...homeTheme.infoBox, flex: 1, paddingVertical: 30 }}>
+                                <Text style={ homeTheme.infoBoxTitle }>PRESSURE</Text>
+                                <View style={{ flexDirection: 'row', marginTop: 3 }}>
+                                    <Text style={ homeTheme.infoBoxData }>{ currentWeather.main.pressure } hPa</Text>
+                                </View>
+                            </View>
+
+                            <View style={{ ...homeTheme.infoBox, flex: 1, paddingVertical: 30 }}>
+                                <Text style={ homeTheme.infoBoxTitle }>CLOUDINESS</Text>
+                                <View style={{ flexDirection: 'row', marginTop: 3 }}>
+                                    <Text style={ homeTheme.infoBoxData }>{ currentWeather.clouds.all }%</Text>
+                                </View>
+                            </View>
+                        </View>
+                        
+                        {/* COORDINATES */}
+                        <View style={ homeTheme.infoBox }>
+                            <Text style={ homeTheme.infoBoxTitle }>COORDINATES</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
+                                <Text style={ homeTheme.infoBoxLabel }>- Latitude</Text>
+                                <Text style={ homeTheme.infoBoxData }>{ currentWeather.coord.lat }</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
+                                <Text style={ homeTheme.infoBoxLabel }>- Longitude</Text>
+                                <Text style={ homeTheme.infoBoxData }>{ currentWeather.coord.lon }</Text>
+                            </View>
+                        </View>
+
+                    </>
+                )
+            }
+
 
             {/* loading cities */}
             {
@@ -137,26 +232,7 @@ const HomeScreen = () => {
                         )
                     }
                 </View>
-
-                {/* weather info */}
-                { ( !onFocus && cities.length === 0 ) && (
-                    <View>
-                        <View>
-                            <Text>{ city.countryCode } - { city.region }</Text>
-                            <Text>{ city.name }</Text>
-                        </View>
-
-                        <WeatherInfo 
-                            temp={ currentWeather.main.temp } 
-                            temp_max={ currentWeather.main.temp_max }
-                            temp_min={ currentWeather.main.temp_min }
-                            description={ currentWeather.main.description }
-                            icon={ currentWeather.main.icon }
-                        />
-                    </View>
-                )}
-
-            </ScrollView>
+            </ScrollView>     
         </View>
     );
 };

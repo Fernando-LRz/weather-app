@@ -24,17 +24,19 @@ const SearchCityInput = ({ onDebounce, onFocus }: Props) => {
             <View style={ styles.backgroundText }>
                 <TextInput 
                     placeholder="Search City..."
+                    placeholderTextColor="#a4a1ab"
                     autoCapitalize="none"
                     autoCorrect={ false }
                     style={ styles.inputText }
                     value={ search }
                     onChangeText={ setSearch }
                     onFocus={ () => onFocus(true) }
+                    autoFocus={ true }
                     onBlur={ () => onFocus(false) }
                 />
                 <Icon 
                     name="search-outline"
-                    color="grey"
+                    color="#a4a1ab"
                     size={ 30 }
                 />
             </View>
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
         height: 40,
         paddingHorizontal: 20,
         borderRadius: 50, 
-        backgroundColor: '#F3F1F3',
+        backgroundColor: '#12083b',
 
         shadowColor: "#000",
         shadowOffset: {
@@ -68,6 +70,7 @@ const styles = StyleSheet.create({
     },
     inputText: {
         fontSize: 18,
+        color: '#a4a1ab',
         flex: 1
     }
 });

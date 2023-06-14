@@ -35,8 +35,6 @@ export interface CurrentWeather {
     humidity:    number;
     sea_level:   number;
     grnd_level:  number;
-    description: string;
-    icon:        string;
 }
 
 export interface SimpleCurrentWeather {
