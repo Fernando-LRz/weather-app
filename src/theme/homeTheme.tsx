@@ -2,9 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const homeTheme = StyleSheet.create({
     header: {
-        backgroundColor: '#12083b',
-        borderBottomLeftRadius: 30,
-        borderBottomRightRadius: 30,
+        backgroundColor: '#12083b'
     },
     headerCityName: {
         textAlign: 'center',
@@ -44,6 +42,19 @@ const homeTheme = StyleSheet.create({
         borderRadius: 30,
         borderColor: 'grey',
         borderWidth: 1
+    },
+    backButtonText: {
+        fontSize: 22,
+        fontWeight: '600',
+        color: 'white'
+    },
+    backButton: {
+        backgroundColor: '#20053d',
+        paddingVertical: 15,
+        paddingHorizontal: 25,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: 'grey'
     }
 });
 

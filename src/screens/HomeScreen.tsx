@@ -63,7 +63,7 @@ const HomeScreen = () => {
             backgroundColor: '#271c4f'
         }}>
             {   
-                onFocus && (
+                (onFocus || cities.length > 0) && (
                     <SearchCityInput 
                         onDebounce={ setSearchTerm }
                         onFocus={ setOnFocus }
@@ -193,7 +193,7 @@ const HomeScreen = () => {
             }
 
             <ScrollView>
-                {/* cities */}
+                {/* CITIES */}
                 <View style={{ marginTop: 10 }}>
                     {
                         (( onFocus || cities.length > 0 ) && ( !isLoadingCities )) && (
@@ -213,6 +213,7 @@ const HomeScreen = () => {
                             }
                         ))
                     }
+                    {/* BACK BUTTON */}
                     {
                         (( cities.length > 0 ) && ( !isLoadingCities )) && (
                             <View 
@@ -224,9 +225,10 @@ const HomeScreen = () => {
                             >
                                 <TouchableOpacity 
                                     activeOpacity={ 0.8 }
+                                    style={ homeTheme.backButton }
                                     onPress={ () => setSearchTerm('') }
                                 >
-                                    <Text>Back</Text>
+                                    <Text style={ homeTheme.backButtonText }>Back</Text>
                                 </TouchableOpacity>
                             </View>
                         )

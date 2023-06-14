@@ -68,6 +68,8 @@ const useWeatherApp = () => {
         setIsLoadingCityInfo(true);
         setIsLoadingWeather(true);
 
+        setCities([]);
+
         await AsyncStorage.setItem('cityId', id.toString());
 
         loadDefaultCity();
