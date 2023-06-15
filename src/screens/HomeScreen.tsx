@@ -11,6 +11,9 @@ import CityOption from '../components/CityOption';
 import Loading from '../components/Loading';
 
 import homeTheme from '../theme/homeTheme';
+import BigDataCard from '../components/BigDataCard';
+import SmallDataCard from '../components/SmallDataCard';
+import BackButton from '../components/BackButton';
 
 const HomeScreen = () => {
 
@@ -96,86 +99,54 @@ const HomeScreen = () => {
                         </View>
 
                         {/* TEMPERATURE */}
-                        <View style={ homeTheme.infoBox }>
-                            <Text style={ homeTheme.infoBoxTitle }>TEMPERATURE</Text>
-
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <View style={{ flex: 1, marginRight: 25 }}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
-                                        <Text style={ homeTheme.infoBoxLabel }>- Min</Text>
-                                        <Text style={ homeTheme.infoBoxData }>{ currentWeather.main.temp_min }°C</Text>
-                                    </View>
-
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
-                                        <Text style={ homeTheme.infoBoxLabel }>- Max</Text>
-                                        <Text style={ homeTheme.infoBoxData }>{ currentWeather.main.temp_max }°C</Text>
-                                    </View>
-                                </View>
-
-                                <Image 
-                                    source={{ uri: `https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}@2x.png` }} 
-                                    style={{ 
-                                        height: 85,
-                                        width: 65
-                                    }}
-                                />
-                            </View>
-                        </View>
+                        <BigDataCard
+                            title="Temperature"
+                            firstLabel="Min"
+                            firstData={ currentWeather.main.temp_min }
+                            secondLabel="Max"
+                            secondData={ currentWeather.main.temp_max }
+                            icon={ currentWeather.weather[0].icon }
+                        />
 
                         {/* HUMITY & VISIBILITY */}
                         <View style={{ flexDirection: 'row' }}>
-                            <View style={{ ...homeTheme.infoBox, flex: 1, paddingVertical: 30 }}>
-                                <Text style={ homeTheme.infoBoxTitle }>HUMIDITY</Text>
-                                <View style={{ flexDirection: 'row', marginTop: 3 }}>
-                                    <Text style={ homeTheme.infoBoxData }>{ currentWeather.main.humidity }%</Text>
-                                </View>
-                            </View>
+                            <SmallDataCard 
+                                title="Humity"
+                                data={ currentWeather.main.humidity.toString() + ' %' }
+                            />
 
-                            <View style={{ ...homeTheme.infoBox, flex: 1, paddingVertical: 30 }}>
-                                <Text style={ homeTheme.infoBoxTitle }>VISIBILITY</Text>
-                                <View style={{ flexDirection: 'row', marginTop: 3 }}>
-                                    <Text style={ homeTheme.infoBoxData }>{ (currentWeather.visibility) / 1000 } KM</Text>
-                                </View>
-                            </View>
+                            <SmallDataCard 
+                                title="Visibility"
+                                data={ (currentWeather.visibility / 1000).toString() + ' KM' }
+                            />
                         </View>
 
-                        {/* PRESSURE  & CLOUDINESS */}
+                        {/* PRESSURE & CLOUDINESS */}
                         <View style={{ flexDirection: 'row' }}>
-                            <View style={{ ...homeTheme.infoBox, flex: 1, paddingVertical: 30 }}>
-                                <Text style={ homeTheme.infoBoxTitle }>PRESSURE</Text>
-                                <View style={{ flexDirection: 'row', marginTop: 3 }}>
-                                    <Text style={ homeTheme.infoBoxData }>{ currentWeather.main.pressure } hPa</Text>
-                                </View>
-                            </View>
+                            <SmallDataCard 
+                                title="Pressure"
+                                data={ currentWeather.main.pressure.toString() + 'hPa' }
+                            />
 
-                            <View style={{ ...homeTheme.infoBox, flex: 1, paddingVertical: 30 }}>
-                                <Text style={ homeTheme.infoBoxTitle }>CLOUDINESS</Text>
-                                <View style={{ flexDirection: 'row', marginTop: 3 }}>
-                                    <Text style={ homeTheme.infoBoxData }>{ currentWeather.clouds.all }%</Text>
-                                </View>
-                            </View>
+                            <SmallDataCard 
+                                title="Cloudiness"
+                                data={ currentWeather.clouds.all.toString() + ' %' }
+                            />
                         </View>
                         
                         {/* COORDINATES */}
-                        <View style={ homeTheme.infoBox }>
-                            <Text style={ homeTheme.infoBoxTitle }>COORDINATES</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
-                                <Text style={ homeTheme.infoBoxLabel }>- Latitude</Text>
-                                <Text style={ homeTheme.infoBoxData }>{ currentWeather.coord.lat }</Text>
-                            </View>
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
-                                <Text style={ homeTheme.infoBoxLabel }>- Longitude</Text>
-                                <Text style={ homeTheme.infoBoxData }>{ currentWeather.coord.lon }</Text>
-                            </View>
-                        </View>
+                        <BigDataCard
+                            title="Coordinates"
+                            firstLabel="Latitude"
+                            firstData={ currentWeather.coord.lat }
+                            secondLabel="Longitude"
+                            secondData={ currentWeather.coord.lon }
+                        />
 
                     </>
                 )
             }
 
-
-            {/* loading cities */}
             {
                 isLoadingCities && (
                     <View style={{
@@ -213,24 +184,13 @@ const HomeScreen = () => {
                             }
                         ))
                     }
+
                     {/* BACK BUTTON */}
                     {
                         (( cities.length > 0 ) && ( !isLoadingCities )) && (
-                            <View 
-                                style={{ 
-                                    alignItems: 'center', 
-                                    marginTop: 50, 
-                                    marginBottom: 40 
-                                }}
-                            >
-                                <TouchableOpacity 
-                                    activeOpacity={ 0.8 }
-                                    style={ homeTheme.backButton }
-                                    onPress={ () => setSearchTerm('') }
-                                >
-                                    <Text style={ homeTheme.backButtonText }>Back</Text>
-                                </TouchableOpacity>
-                            </View>
+                            <BackButton 
+                                resetSearchTerm={ setSearchTerm }
+                            />
                         )
                     }
                 </View>
