@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
-import homeTheme from '../theme/homeTheme';
+import appTheme from '../theme/appTheme';
 
 interface Props {
     title: string;
@@ -13,19 +13,19 @@ interface Props {
 
 const BigInfoCard = ({ title, firstLabel, firstData, secondLabel, secondData, icon }: Props) => {
     return (
-        <View style={ homeTheme.infoBox }>
-            <Text style={ homeTheme.infoBoxTitle }>{ title.toUpperCase() }</Text>
+        <View style={ appTheme.infoBox }>
+            <Text style={ appTheme.infoBoxTitle }>{ title.toUpperCase() }</Text>
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1, marginRight: 25 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
-                        <Text style={ homeTheme.infoBoxLabel }>- { firstLabel }</Text>
-                        <Text style={ homeTheme.infoBoxData }>{ firstData }°C</Text>
+                        <Text style={ appTheme.infoBoxLabel }>- { firstLabel }</Text>
+                        <Text style={ appTheme.infoBoxData }>{ firstData }°C</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
-                        <Text style={ homeTheme.infoBoxLabel }>- { secondLabel }</Text>
-                        <Text style={ homeTheme.infoBoxData }>{ secondData }°C</Text>
+                        <Text style={ appTheme.infoBoxLabel }>- { secondLabel }</Text>
+                        <Text style={ appTheme.infoBoxData }>{ secondData }°C</Text>
                     </View>
                 </View>
 

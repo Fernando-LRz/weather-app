@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import homeTheme from '../theme/homeTheme';
+import appTheme from '../theme/appTheme';
 
 interface Props {
     cityName: string;
@@ -14,9 +14,9 @@ interface Props {
 
 const Header = ({ cityName, temp, description, changeFocusStatus }: Props) => {
     return (
-        <View style={ homeTheme.header }>
-            <Text style={ homeTheme.headerCityName }>{ cityName }</Text>
-            <Text style={ homeTheme.headerTemp }>{ temp }°C | { description }</Text>
+        <View style={ appTheme.header }>
+            <Text style={ appTheme.headerCityName }>{ cityName }</Text>
+            <Text style={ appTheme.headerTemp }>{ temp }°C | { description }</Text>
             <TouchableOpacity
                 activeOpacity={ 0.8 }
                 style={{ 

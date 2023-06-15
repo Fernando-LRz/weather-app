@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
-import homeTheme from '../theme/homeTheme';
+import appTheme from '../theme/appTheme';
 
 interface Props {
     resetSearchTerm: (searchTerm: string) => void;
@@ -15,10 +15,10 @@ const BackButton = ({ resetSearchTerm }: Props) => {
         }}>
             <TouchableOpacity 
                 activeOpacity={ 0.8 }
-                style={ homeTheme.backButton }
+                style={ appTheme.backButton }
                 onPress={ () => resetSearchTerm('') }
             >
-                <Text style={ homeTheme.backButtonText }>Back</Text>
+                <Text style={ appTheme.backButtonText }>Back</Text>
             </TouchableOpacity>
         </View>
     );
