@@ -2,7 +2,9 @@ import { StyleSheet } from 'react-native';
 
 const homeTheme = StyleSheet.create({
     header: {
-        backgroundColor: '#12083b'
+        backgroundColor: '#12083b',
+        borderBottomLeftRadius: 55,
+        borderBottomRightRadius: 55
     },
     headerCityName: {
         textAlign: 'center',

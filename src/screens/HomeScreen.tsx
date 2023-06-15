@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, Text, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
-
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
 
 import useWeatherApp from '../hooks/useWeatherApp';
 
@@ -10,10 +8,10 @@ import SearchCityInput from '../components/SearchCityInput';
 import CityOption from '../components/CityOption';
 import Loading from '../components/Loading';
 
-import homeTheme from '../theme/homeTheme';
 import BigDataCard from '../components/BigDataCard';
 import SmallDataCard from '../components/SmallDataCard';
 import BackButton from '../components/BackButton';
+import Header from '../components/Header';
 
 const HomeScreen = () => {
 
@@ -66,7 +64,7 @@ const HomeScreen = () => {
             backgroundColor: '#271c4f'
         }}>
             {   
-                (onFocus || cities.length > 0) && (
+                ( onFocus || cities.length > 0 ) && (
                     <SearchCityInput 
                         onDebounce={ setSearchTerm }
                         onFocus={ setOnFocus }
@@ -78,25 +76,12 @@ const HomeScreen = () => {
                 ( !onFocus && cities.length === 0 ) && (
                     <>
                         {/* HEADER */}
-                        <View style={ homeTheme.header }>
-                            <Text style={ homeTheme.headerCityName }>{ city.name }</Text>
-                            <Text style={ homeTheme.headerTemp }>{ currentWeather.main.temp }°C | { currentWeather.weather[0].description }</Text>
-                            <TouchableOpacity
-                                activeOpacity={ 0.8 }
-                                style={{ 
-                                    position: 'absolute',
-                                    right: 10,
-                                    top: 10
-                                }}
-                                onPress={ () => setOnFocus(true) }
-                            >
-                                <Icon 
-                                    name="search-outline"
-                                    color="#a4a1ab"
-                                    size={ 30 }
-                                />
-                            </TouchableOpacity>
-                        </View>
+                        <Header 
+                            cityName={ city.name }
+                            temp={ currentWeather.main.temp }
+                            description={ currentWeather.weather[0].description }
+                            changeFocusStatus={ setOnFocus }
+                        />
 
                         {/* TEMPERATURE */}
                         <BigDataCard
@@ -148,7 +133,7 @@ const HomeScreen = () => {
             }
 
             {
-                isLoadingCities && (
+                ( isLoadingCities ) && (
                     <View style={{
                         position: 'absolute',
                         height: '100%',
