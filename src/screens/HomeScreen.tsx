@@ -61,7 +61,8 @@ const HomeScreen = () => {
     return (
         <View style={{ 
             flex: 1, 
-            backgroundColor: '#271c4f'
+            // backgroundColor: '#230e47'
+            backgroundColor: '#2b0354'
         }}>
             {   
                 ( onFocus || cities.length > 0 ) && (
@@ -97,7 +98,7 @@ const HomeScreen = () => {
                         <View style={{ flexDirection: 'row' }}>
                             <SmallDataCard 
                                 title="Humity"
-                                data={ currentWeather.main.humidity.toString() + ' %' }
+                                data={ currentWeather.main.humidity.toString() + '%' }
                             />
 
                             <SmallDataCard 
@@ -110,12 +111,12 @@ const HomeScreen = () => {
                         <View style={{ flexDirection: 'row' }}>
                             <SmallDataCard 
                                 title="Pressure"
-                                data={ currentWeather.main.pressure.toString() + 'hPa' }
+                                data={ currentWeather.main.pressure.toString() + ' hPa' }
                             />
 
                             <SmallDataCard 
                                 title="Cloudiness"
-                                data={ currentWeather.clouds.all.toString() + ' %' }
+                                data={ currentWeather.clouds.all.toString() + '%' }
                             />
                         </View>
                         

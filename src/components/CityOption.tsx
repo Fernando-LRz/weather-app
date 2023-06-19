@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 20,
         height: 120,
-        backgroundColor: '#1a1742',
+        backgroundColor: '#3f0270',
         borderRadius: 20,
         marginVertical: 10
     },

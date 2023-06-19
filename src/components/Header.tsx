@@ -14,7 +14,7 @@ interface Props {
 
 const Header = ({ cityName, temp, description, changeFocusStatus }: Props) => {
     return (
-        <View style={ appTheme.header }>
+        <View>
             <Text style={ appTheme.headerCityName }>{ cityName }</Text>
             <Text style={ appTheme.headerTemp }>{ temp }°C | { description }</Text>
             <TouchableOpacity

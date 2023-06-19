@@ -1,9 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 const appTheme = StyleSheet.create({
-    header: {
-        backgroundColor: '#12083b'
-    },
     headerCityName: {
         textAlign: 'center',
         fontSize: 38,
@@ -38,10 +35,8 @@ const appTheme = StyleSheet.create({
         marginHorizontal: 20,
         paddingVertical: 15,
         paddingHorizontal: 20,
-        backgroundColor: '#20053d',
-        borderRadius: 30,
-        borderColor: 'grey',
-        borderWidth: 1
+        backgroundColor: '#230342',
+        borderRadius: 30
     },
     backButtonText: {
         fontSize: 22,
