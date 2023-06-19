@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator } from 'react-native';
 
-import useCurrentWeather from '../hooks/useCurrentWeather';
+import useWeather from '../hooks/useWeather';
 
 interface Props {
     id: number;
@@ -15,13 +15,13 @@ interface Props {
 
 const CityOption = ({ id, name, country, region, lat, lon, setCity }: Props) => {
 
-    const { getWeather } = useCurrentWeather();
+    const { getCurrentWeather } = useWeather();
     const [ temp, setTemp ] = useState<number>();
     const [ icon, setIcon ] = useState<string>();
     const [ isAnError, setIsAnError ] = useState<boolean>(false);
 
     const loadTemperature = async () => {
-        const weather = await getWeather(lat, lon);
+        const weather = await getCurrentWeather(lat, lon);
 
         if(!weather) {
             setIsAnError(true);

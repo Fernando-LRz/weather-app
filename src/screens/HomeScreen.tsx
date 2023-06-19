@@ -21,8 +21,6 @@ const HomeScreen = () => {
     const { 
             city, 
             cities, 
-            loadDefaultCity, 
-            loadDefaultCityCurrentWeather,
             isLoadingCityInfo, 
             isLoadingWeather,
             isLoadingCities,
@@ -31,16 +29,6 @@ const HomeScreen = () => {
             loadNewCity,
             loadCities
     } = useWeatherApp();
-    
-
-    useEffect(() => {
-        loadDefaultCity();
-    }, []);
-
-    useEffect(() => {
-        if (!city.name) return;
-        loadDefaultCityCurrentWeather(city.latitude, city.longitude);
-    }, [ city ])
 
     useEffect(() => {
         loadCities(searchTerm);

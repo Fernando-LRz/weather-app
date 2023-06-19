@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import useCities from '../hooks/useCities';
-import useCurrentWeather from '../hooks/useCurrentWeather';
+import useWeather from './useWeather';
 import onlyLettersAndSpaces from '../helpers/onlyLettersAndSpaces';
 
 import { FullCity, SimpleCity } from '../interfaces/CityInterfaces';
 import { OpenWeatherResponse } from '../interfaces/CurrentWeatherInterfaces';
+import { OpenWeatherForecastResponse } from '../interfaces/WeatherForecastInterfaces';
 
 const useWeatherApp = () => {
     const [ cities, setCities ] = useState<SimpleCity[]>([]);
@@ -20,18 +21,25 @@ const useWeatherApp = () => {
     const [ isLoadingCityInfo, setIsLoadingCityInfo ] = useState(true);
 
     const [ currentWeather, setCurrentWeather ] = useState<OpenWeatherResponse>({} as OpenWeatherResponse);
+    const [ weatherForecast, setWeatherForecast ] = useState<OpenWeatherForecastResponse>({} as OpenWeatherForecastResponse);
     const [ isLoadingWeather, setIsLoadingWeather ] = useState(true);
-    const { getWeather } = useCurrentWeather();
+
+    const { getCurrentWeather, getWeatherForecast } = useWeather();
 
     useEffect(() => {
-        if (!city.name) return;
+        loadCity();
+    }, []);
+
+    useEffect(() => {
+        if (!city.id) return;
+        loadWeather(city.latitude, city.longitude);
         setIsLoadingCityInfo(false);
-    }, [ city ])
+    }, [ city ]);
 
     useEffect(() => {
-        if (!currentWeather.main) return;
+        if (!currentWeather.cod || !weatherForecast.cod) return;
         setIsLoadingWeather(false);
-    }, [ currentWeather ])
+    }, [ currentWeather, weatherForecast ]);
 
     useEffect(() => {
         if(cities.length === 0 || !isLoadingCities) return;
@@ -41,7 +49,7 @@ const useWeatherApp = () => {
     const loadCities = async (searchTerm: string) => {
         setCities([]);
 
-        if( !searchTerm || !onlyLettersAndSpaces(searchTerm)) return;
+        if(!searchTerm || !onlyLettersAndSpaces(searchTerm)) return;
         setIsLoadingCities(true);
 
         const cities = await getCities(searchTerm);
@@ -50,7 +58,7 @@ const useWeatherApp = () => {
         setCities(cities);
     }
 
-    const loadDefaultCity = async (id: number = 3453102) => {
+    const loadCity = async (id: number = 3453102) => {
         const cityId = await AsyncStorage.getItem('cityId');
         if(cityId) id = Number(cityId);
 
@@ -64,6 +72,24 @@ const useWeatherApp = () => {
         setCity(city.data);
     }
 
+    const loadWeather = async (lat: number, lon: number) => {
+        const currentWeatherPromise = getCurrentWeather(lat, lon);
+        const weatherForecastPromise = getWeatherForecast(lat, lon);
+
+        const [ currentWeather, weatherForecast ] = await Promise.all([      
+            currentWeatherPromise, 
+            weatherForecastPromise 
+        ]);
+
+        if(!currentWeather || !weatherForecast) {
+            setIsAnError(true);
+            return;
+        }
+        
+        setCurrentWeather(currentWeather);
+        setWeatherForecast(weatherForecast);
+    }
+
     const loadNewCity = async (id: number) => {
         setIsLoadingCityInfo(true);
         setIsLoadingWeather(true);
@@ -72,32 +98,19 @@ const useWeatherApp = () => {
 
         await AsyncStorage.setItem('cityId', id.toString());
 
-        loadDefaultCity();
-    }
-
-    const loadDefaultCityCurrentWeather = async (lat: number, lon: number) => {
-        const weather = await getWeather(lat, lon);
-
-        if(!weather) {
-            setIsAnError(true);
-            return;
-        }
-        
-        setCurrentWeather(weather);
+        loadCity();
     }
 
     return {
-        cities, 
-        loadDefaultCity,
-        loadDefaultCityCurrentWeather,
-        loadNewCity,
-        loadCities,
-        isAnError,
         city,
+        cities, 
         isLoadingCityInfo,
-        currentWeather, 
         isLoadingWeather,
-        isLoadingCities
+        isLoadingCities,
+        currentWeather, 
+        isAnError,
+        loadNewCity,
+        loadCities
     }
 }
 
