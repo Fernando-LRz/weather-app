@@ -128,7 +128,6 @@ const HomeScreen = () => {
                             secondLabel="Longitude"
                             secondData={ currentWeather.coord.lon }
                         />
-
                     </>
                 )
             }
@@ -149,38 +148,42 @@ const HomeScreen = () => {
                 )
             }
 
-            <ScrollView>
-                {/* CITIES */}
-                <View style={{ marginTop: 10 }}>
-                    {
-                        (( onFocus || cities.length > 0 ) && ( !isLoadingCities )) && (
-                            cities.map((city, index) => {
-                                return (
-                                    <CityOption 
-                                        id={ city.id }
-                                        name={ city.name } 
-                                        country={ city.countryCode } 
-                                        region={ city.region }
-                                        lat={ city.latitude }
-                                        lon={ city.longitude }
-                                        setCity={ loadNewCity }
-                                        key={ city.id + index }
+            {
+                (( onFocus || cities.length > 0 ) && ( !isLoadingCities )) && (
+
+                    <ScrollView>
+                        {/* CITIES */}
+                        <View style={{ marginTop: 10 }}>
+                            {
+                                cities.map((city, index) => {
+                                    return (
+                                        <CityOption 
+                                            id={ city.id }
+                                            name={ city.name } 
+                                            country={ city.countryCode } 
+                                            region={ city.region }
+                                            lat={ city.latitude }
+                                            lon={ city.longitude }
+                                            setCity={ loadNewCity }
+                                            key={ city.id + index }
+                                        />
+                                    )
+                                })
+                            }
+
+                            {/* BACK BUTTON */}
+                            {
+                                (( cities.length > 0 ) && ( !isLoadingCities )) && (
+                                    <BackButton 
+                                        resetSearchTerm={ setSearchTerm }
                                     />
                                 )
                             }
-                        ))
-                    }
+                        </View>
+                    </ScrollView>     
+                )
+            }
 
-                    {/* BACK BUTTON */}
-                    {
-                        (( cities.length > 0 ) && ( !isLoadingCities )) && (
-                            <BackButton 
-                                resetSearchTerm={ setSearchTerm }
-                            />
-                        )
-                    }
-                </View>
-            </ScrollView>     
         </View>
     );
 };

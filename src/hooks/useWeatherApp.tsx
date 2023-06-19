@@ -6,7 +6,7 @@ import useCurrentWeather from '../hooks/useCurrentWeather';
 import onlyLettersAndSpaces from '../helpers/onlyLettersAndSpaces';
 
 import { FullCity, SimpleCity } from '../interfaces/CityInterfaces';
-import { OpenWeatherResponse } from '../interfaces/WeatherInterfaces';
+import { OpenWeatherResponse } from '../interfaces/CurrentWeatherInterfaces';
 
 const useWeatherApp = () => {
     const [ cities, setCities ] = useState<SimpleCity[]>([]);

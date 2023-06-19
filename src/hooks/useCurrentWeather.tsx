@@ -1,5 +1,5 @@
 import OpenWeatherApi from '../api/OpenWeatherApi';
-import { OpenWeatherResponse } from '../interfaces/WeatherInterfaces';
+import { OpenWeatherResponse } from '../interfaces/CurrentWeatherInterfaces';
 
 const useCurrentWeather = () => {
 
