@@ -4,7 +4,7 @@ export interface OpenWeatherForecastResponse {
     cod:     string;
     message: number;
     cnt:     number;
-    list:    List[];
+    list:    Forecast[];
     city:    City;
 }
 
@@ -24,7 +24,7 @@ export interface Coord {
     lon: number;
 }
 
-export interface List {
+export interface Forecast {
     dt:         number;
     main:       MainClass;
     weather:    Weather[];

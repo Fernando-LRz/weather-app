@@ -1,21 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 const appTheme = StyleSheet.create({
-    headerCityName: {
-        textAlign: 'center',
-        fontSize: 38,
-        color: 'white',
-        fontWeight: '500',
-        marginTop: 20
-    },
-    headerTemp: {
-        textAlign: 'center',
-        fontSize: 20,
-        fontWeight: '500',
-        color: 'white',
-        opacity: 0.5,
-        marginBottom: 25
-    },
     infoBoxTitle: {
         fontSize: 18,
         color: '#b7b5ba'

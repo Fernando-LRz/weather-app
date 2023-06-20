@@ -37,7 +37,7 @@ const useWeatherApp = () => {
     }, [ city ]);
 
     useEffect(() => {
-        if (!currentWeather.cod || !weatherForecast.cod) return;
+        if (!currentWeather.main || !weatherForecast.list) return;
         setIsLoadingWeather(false);
     }, [ currentWeather, weatherForecast ]);
 
@@ -108,6 +108,7 @@ const useWeatherApp = () => {
         isLoadingWeather,
         isLoadingCities,
         currentWeather, 
+        weatherForecast,
         isAnError,
         loadNewCity,
         loadCities

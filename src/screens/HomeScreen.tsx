@@ -12,6 +12,7 @@ import BigDataCard from '../components/BigDataCard';
 import SmallDataCard from '../components/SmallDataCard';
 import BackButton from '../components/BackButton';
 import Header from '../components/Header';
+import Forecast from '../components/Forecast';
 
 const HomeScreen = () => {
 
@@ -24,7 +25,8 @@ const HomeScreen = () => {
             isLoadingCityInfo, 
             isLoadingWeather,
             isLoadingCities,
-            currentWeather, 
+            currentWeather,
+            weatherForecast, 
             isAnError, 
             loadNewCity,
             loadCities
@@ -63,7 +65,7 @@ const HomeScreen = () => {
 
             {
                 ( !onFocus && cities.length === 0 ) && (
-                    <>
+                    <ScrollView>
                         {/* HEADER */}
                         <Header 
                             cityName={ city.name }
@@ -116,7 +118,10 @@ const HomeScreen = () => {
                             secondLabel="Longitude"
                             secondData={ currentWeather.coord.lon }
                         />
-                    </>
+
+                        {/* FORECAST */}
+                        <Forecast forecastData={ weatherForecast.list } />
+                    </ScrollView>
                 )
             }
 
