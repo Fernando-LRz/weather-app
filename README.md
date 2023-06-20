@@ -12,6 +12,7 @@ Weather app built with React Native.
    - Visibility
    - Humidity
    - Atmospheric pressure
+   - 5 day / 3 hour forecast
  
 ## Installation
 1. Clone the repository
