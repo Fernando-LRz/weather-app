@@ -1,4 +1,4 @@
-# RN-Weather
+# Weather app
 Weather app built with React Native.
 
 ## Features
@@ -17,11 +17,11 @@ Weather app built with React Native.
 ## Installation
 1. Clone the repository
 ```bash
-git clone https://github.com/Fernando-LRz/RN-Weather.git
+git clone https://github.com/Fernando-LRz/weather-app.git
 ``` 
-2. Go inside the project folder
+2. Navigate to the project directory
 ```bash
-cd RN-Weather
+cd weather-app
 ```
 3. Install dependencies
 ```bash
@@ -29,9 +29,7 @@ npm install
 ```
 
 ## Configuration
- * An api key from RapidAPI GeoDB Cities is required and must be set in the GeoDBApi.tsx file, located at: src/api.
-
- * An api key from OpenWeather is required and must be set in the OpenWeatherApi.tsx file, located at: src/api.
+ * A GeoDB Cities API key and an OpenWeather API key are required, both must be added to a .env file. There is a sample .env file in the project.
 
 ## Run the app
 ```bash
