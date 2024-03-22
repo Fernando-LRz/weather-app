@@ -8,7 +8,7 @@ export const appTheme = StyleSheet.create({
     infoBoxLabel: {
         fontSize: 19,
         color: '#fff',
-        fontWeight: '700'
+        fontWeight: '700',
     },
     infoBoxData: {
         fontSize: 25,

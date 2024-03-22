@@ -50,7 +50,7 @@ export const Forecast = ({ forecastData }: Props) => {
     return (
         <View style={ styles.container }>
  
-            <Text style={ styles.title }>5 day forecast</Text>      
+            <Text style={ styles.title }>Forecast</Text>      
             <View style={ styles.header }>
                 { 
                     page === 1 &&

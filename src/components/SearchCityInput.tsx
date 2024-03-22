@@ -23,7 +23,7 @@ export const SearchCityInput = ({ onDebounce, onFocus }: Props) => {
         <View style={ styles.container }>
             <View style={ styles.backgroundText }>
                 <TextInput 
-                    placeholder="Search City..."
+                    placeholder="Search city..."
                     placeholderTextColor="#fff"
                     autoCapitalize="none"
                     autoCorrect={ false }
@@ -47,7 +47,8 @@ export const SearchCityInput = ({ onDebounce, onFocus }: Props) => {
 const styles = StyleSheet.create({
     container: {
         marginTop: 25,
-        marginHorizontal: 20
+        marginHorizontal: 20,
+        marginBottom: 4
     },
     backgroundText: {
         flexDirection: 'row',
@@ -58,15 +59,6 @@ const styles = StyleSheet.create({
         borderRadius: 50, 
         backgroundColor: '#302f2f',
 
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        elevation: 5,
     },
     inputText: {
         fontSize: 18,

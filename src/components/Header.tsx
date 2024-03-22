@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '500',
         color: '#fff',
+        opacity: 0.8,
         marginBottom: 25
     },
 });

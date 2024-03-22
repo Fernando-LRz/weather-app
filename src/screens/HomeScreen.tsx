@@ -134,7 +134,7 @@ export const HomeScreen = () => {
                     }}>
                         <ActivityIndicator 
                             size={ 40 } 
-                            color="#5856D6"
+                            color="#fff"
                         />
                     </View>
                 )
