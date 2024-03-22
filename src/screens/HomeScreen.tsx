@@ -42,7 +42,7 @@ export const HomeScreen = () => {
         )
     }
 
-    if(isAnError) {
+    if(true) {
         return (
             <ErrorMessage />
         )
