@@ -29,7 +29,7 @@ export const appTheme = StyleSheet.create({
         color: '#fff'
     },
     backButton: {
-        backgroundColor: '#2c14de',
+        backgroundColor: '#c71044',
         paddingVertical: 15,
         paddingHorizontal: 25,
         borderRadius: 20,
