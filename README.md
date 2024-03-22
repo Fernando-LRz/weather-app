@@ -39,4 +39,4 @@ npx react-native run-android
 ## App images
 | Weather info                                                | Forecast                                                           | City search                                                 | 
 | ----------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------- | 
-| <img src="images/weather.png" width="240" height="490"/>    | <img src="images/forecast.png" width="240" height="490"/>          | <img src="images/search.png" width="240" height="490"/>     | 
+| <img src="images/weather.png" width="235" height="490"/>    | <img src="images/forecast.png" width="235" height="490"/>          | <img src="images/search.png" width="235" height="490"/>     | 
