@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator } from 'react-native';
 
-import useWeather from '../hooks/useWeather';
+import { useWeather } from '../hooks/useWeather';
 
 interface Props {
     id: number;
@@ -13,7 +13,7 @@ interface Props {
     setCity: (id: number) => void;
 }
 
-const CityOption = ({ id, name, country, region, lat, lon, setCity }: Props) => {
+export const CityOption = ({ id, name, country, region, lat, lon, setCity }: Props) => {
 
     const { getCurrentWeather } = useWeather();
     const [ temp, setTemp ] = useState<number>();
@@ -65,7 +65,7 @@ const CityOption = ({ id, name, country, region, lat, lon, setCity }: Props) => 
                 ): (
                     <ActivityIndicator
                         size={ 50 } 
-                        color="white"
+                        color="#fff"
                         style={{
                             height: 105,
                             width: 105
@@ -84,25 +84,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 20,
         height: 120,
-        backgroundColor: '#3f0270',
+        backgroundColor: '#2c14de',
         borderRadius: 20,
         marginVertical: 10
     },
     weatherToday: {
-        color: 'white',
+        color: '#fff',
         fontSize: 35,
         fontWeight: '400'
     },
     country_region: {
-        color: 'white',
+        color: '#fff',
         fontSize: 20,
         fontWeight: 'bold'
     },
     city: {
-        color: 'white',
+        color: '#fff',
         fontSize: 17,
         fontWeight: '500'
     }
 });
-
-export default CityOption;

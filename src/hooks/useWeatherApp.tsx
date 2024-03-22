@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import useCities from '../hooks/useCities';
-import useWeather from './useWeather';
-import onlyLettersAndSpaces from '../helpers/onlyLettersAndSpaces';
+import { useCities } from '../hooks/useCities';
+import { useWeather } from './useWeather';
+import { onlyLettersAndSpaces } from '../helpers/onlyLettersAndSpaces';
 
 import { FullCity, SimpleCity } from '../interfaces/CityInterfaces';
 import { OpenWeatherResponse } from '../interfaces/CurrentWeatherInterfaces';
 import { OpenWeatherForecastResponse } from '../interfaces/WeatherForecastInterfaces';
 
-const useWeatherApp = () => {
+export const useWeatherApp = () => {
     const [ cities, setCities ] = useState<SimpleCity[]>([]);
     const [ isLoadingCities, setIsLoadingCities ] = useState(false);
 
@@ -114,5 +114,3 @@ const useWeatherApp = () => {
         loadCities
     }
 }
-
-export default useWeatherApp;

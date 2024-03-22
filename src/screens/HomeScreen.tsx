@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, ActivityIndicator } from 'react-native';
 
-import useWeatherApp from '../hooks/useWeatherApp';
+import { useWeatherApp } from '../hooks/useWeatherApp';
 
-import ErrorMessage from '../components/ErrorMessage';
-import SearchCityInput from '../components/SearchCityInput';
-import CityOption from '../components/CityOption';
-import Loading from '../components/Loading';
+import { ErrorMessage } from '../components/ErrorMessage';
+import { SearchCityInput } from '../components/SearchCityInput';
+import { CityOption } from '../components/CityOption';
+import { Loading } from '../components/Loading';
 
-import BigDataCard from '../components/BigDataCard';
-import SmallDataCard from '../components/SmallDataCard';
-import BackButton from '../components/BackButton';
-import Header from '../components/Header';
-import Forecast from '../components/Forecast';
+import { BigInfoCard } from '../components/BigInfoCard';
+import { SmallDataCard } from '../components/SmallDataCard';
+import { BackButton } from '../components/BackButton';
+import { Header } from '../components/Header';
+import { Forecast } from '../components/Forecast';
 
-const HomeScreen = () => {
+export const HomeScreen = () => {
 
     const [ searchTerm, setSearchTerm ] = useState('');
     const [ onFocus, setOnFocus ] = useState(false);
@@ -25,7 +25,7 @@ const HomeScreen = () => {
             isLoadingCityInfo, 
             isLoadingWeather,
             isLoadingCities,
-            currentWeather,
+            currentWeather: weatherInfo,
             weatherForecast, 
             isAnError, 
             loadNewCity,
@@ -51,7 +51,7 @@ const HomeScreen = () => {
     return (
         <View style={{ 
             flex: 1, 
-            backgroundColor: '#2b0354'
+            backgroundColor: "#000"
         }}>
             {   
                 ( onFocus || cities.length > 0 ) && (
@@ -65,60 +65,60 @@ const HomeScreen = () => {
             {
                 ( !onFocus && cities.length === 0 ) && (
                     <ScrollView>
-                        {/* HEADER */}
+                        {/* Header */}
                         <Header 
                             cityName={ city.name }
-                            temp={ currentWeather.main.temp }
-                            description={ currentWeather.weather[0].description }
+                            temp={ weatherInfo.main.temp }
+                            description={ weatherInfo.weather[0].description }
                             changeFocusStatus={ setOnFocus }
                         />
 
-                        {/* TEMPERATURE */}
-                        <BigDataCard
+                        {/* Temperature */}
+                        <BigInfoCard
                             title="Temperature"
                             firstLabel="Min"
-                            firstData={ currentWeather.main.temp_min }
+                            firstData={ `${ weatherInfo.main.temp_min.toString() }°C` }
                             secondLabel="Max"
-                            secondData={ currentWeather.main.temp_max }
-                            icon={ currentWeather.weather[0].icon }
+                            secondData={ `${ weatherInfo.main.temp_max.toString() }°C` }
+                            icon={ weatherInfo.weather[0].icon }
                         />
 
-                        {/* HUMITY & VISIBILITY */}
-                        <View style={{ flexDirection: 'row' }}>
+                        {/* Humity & visibility */}
+                        <View style={{ flexDirection: "row" }}>
                             <SmallDataCard 
                                 title="Humity"
-                                data={ currentWeather.main.humidity.toString() + '%' }
+                                data={ weatherInfo.main.humidity.toString() + "%" }
                             />
 
                             <SmallDataCard 
                                 title="Visibility"
-                                data={ (currentWeather.visibility / 1000).toString() + ' KM' }
+                                data={ ( weatherInfo.visibility / 1000 ).toString() + " KM" }
                             />
                         </View>
 
-                        {/* PRESSURE & CLOUDINESS */}
-                        <View style={{ flexDirection: 'row' }}>
+                        {/* Pressure & cloudiness */}
+                        <View style={{ flexDirection: "row" }}>
                             <SmallDataCard 
                                 title="Pressure"
-                                data={ currentWeather.main.pressure.toString() + ' hPa' }
+                                data={ weatherInfo.main.pressure.toString() + " hPa" }
                             />
 
                             <SmallDataCard 
                                 title="Cloudiness"
-                                data={ currentWeather.clouds.all.toString() + '%' }
+                                data={ weatherInfo.clouds.all.toString() + "%" }
                             />
                         </View>
                         
-                        {/* COORDINATES */}
-                        <BigDataCard
-                            title="Coordinates"
-                            firstLabel="Latitude"
-                            firstData={ currentWeather.coord.lat }
-                            secondLabel="Longitude"
-                            secondData={ currentWeather.coord.lon }
+                        {/* wind */}
+                        <BigInfoCard
+                            title="Wind"
+                            firstLabel="Speed"
+                            firstData={ `${ weatherInfo.wind.deg } m/s` }
+                            secondLabel="Direction"
+                            secondData={ `${ weatherInfo.wind.deg }°` }
                         />
 
-                        {/* FORECAST */}
+                        {/* forecast */}
                         <Forecast forecastData={ weatherForecast.list } />
                     </ScrollView>
                 )
@@ -127,10 +127,10 @@ const HomeScreen = () => {
             {
                 ( isLoadingCities ) && (
                     <View style={{
-                        position: 'absolute',
-                        height: '100%',
-                        width: '100%',
-                        justifyContent: 'center'
+                        position: "absolute",
+                        height: "100%",
+                        width: "100%",
+                        justifyContent: "center"
                     }}>
                         <ActivityIndicator 
                             size={ 40 } 
@@ -144,7 +144,7 @@ const HomeScreen = () => {
                 (( onFocus || cities.length > 0 ) && ( !isLoadingCities )) && (
 
                     <ScrollView>
-                        {/* CITIES */}
+                        {/* cities */}
                         <View style={{ marginTop: 10 }}>
                             {
                                 cities.map((city, index) => {
@@ -163,7 +163,7 @@ const HomeScreen = () => {
                                 })
                             }
 
-                            {/* BACK BUTTON */}
+                            {/* back button */}
                             {
                                 (( cities.length > 0 ) && ( !isLoadingCities )) && (
                                     <BackButton 
@@ -179,5 +179,3 @@ const HomeScreen = () => {
         </View>
     );
 };
-
-export default HomeScreen;

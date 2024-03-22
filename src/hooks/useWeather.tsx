@@ -1,8 +1,9 @@
-import OpenWeatherApi from '../api/OpenWeatherApi';
+import { OpenWeatherApi } from '../api/OpenWeatherApi';
+
 import { OpenWeatherResponse } from '../interfaces/CurrentWeatherInterfaces';
 import { OpenWeatherForecastResponse } from '../interfaces/WeatherForecastInterfaces';
 
-const useWeather = () => {
+export const useWeather = () => {
 
     const getCurrentWeather = async ( lat: number, lon: number ) => {
         try {
@@ -29,5 +30,3 @@ const useWeather = () => {
         getWeatherForecast
     }
 };
-
-export default useWeather;

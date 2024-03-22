@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import { ForecastInfoCard } from './ForecastInfoCard';
 import { Forecast as ForecastData } from '../interfaces/WeatherForecastInterfaces';
-import ForecastInfoCard from './ForecastInfoCard';
-import nextDayDate from '../helpers/nextDayDate';
+
+import { nextDayDate } from '../helpers/nextDayDate';
 
 interface Props {
     forecastData: ForecastData[];
 }
 
-const Forecast = ({ forecastData }: Props) => {
+export const Forecast = ({ forecastData }: Props) => {
 
     const [ page, setPage ] = useState<number>(1);
 
@@ -92,7 +93,7 @@ const Forecast = ({ forecastData }: Props) => {
                         onPress={() => setPage(page - 1)}
                         disabled={ page === 1 }
                     >
-                        <Icon name="caret-back-outline" size={ 32 } color={ page !== 1 ? 'white' : 'grey' }/>
+                        <Icon name="caret-back-outline" size={ 32 } color={ page !== 1 ? '#fff' : 'grey' }/>
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -100,7 +101,7 @@ const Forecast = ({ forecastData }: Props) => {
                         onPress={ () => setPage(page + 1) }
                         disabled={ page === 5 }
                     >
-                        <Icon name="caret-forward-outline" size={ 32 } color={ page !== 5 ? 'white' : 'grey' }/>
+                        <Icon name="caret-forward-outline" size={ 32 } color={ page !== 5 ? '#fff' : 'grey' }/>
                     </TouchableOpacity>
                 </View>
 
@@ -176,15 +177,14 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 28,
-        color: 'white',
+        color: '#fff',
         fontWeight: '500',
         textAlign: 'center',
         marginBottom: 10
     },
     date: {
         fontSize: 22,
-        color: 'white',
-        opacity: 0.6,
+        color: '#fff',
         marginVertical: 10
     },
     header: {
@@ -196,5 +196,3 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     }
 });
-
-export default Forecast; 

@@ -8,7 +8,7 @@ interface Props {
     date?: string;
 }
 
-const ForecastInfoCard = ({ temp, time, icon, date }: Props) => {
+export const ForecastInfoCard = ({ temp, time, icon, date }: Props) => {
 
     const iconUri = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
@@ -21,6 +21,7 @@ const ForecastInfoCard = ({ temp, time, icon, date }: Props) => {
                         <Text style={ styles.data }>{ date?.split(' ')[0] }</Text>
                     </View>
             }
+            
             <View>
                 <Text style={ styles.label }>Time</Text>
                 <Text style={ styles.data }>{ time.split(' ')[1].substring(0, 5) }</Text>
@@ -46,23 +47,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        backgroundColor: '#230342',
+        backgroundColor: '#2c14de',
         paddingVertical: 25,
         marginVertical: 10,
         borderRadius: 20
     },
     label: {
         fontSize: 15,
-        color: '#b7b5ba',
+        color: '#fff',
         fontWeight: '700' 
     },
     data: {
         fontSize: 22,
-        color: '#b7b5ba',
-        opacity: 0.7,
+        color: '#fff',
+        opacity: 0.8,
         fontWeight: '600'
     }
-
 });
-
-export default ForecastInfoCard;

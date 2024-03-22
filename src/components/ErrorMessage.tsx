@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
-const ErrorMessage = () => {
+export const ErrorMessage = () => {
     return (
         <View style={ styles.container }>
             <Text style={ styles.message }>An error has occurred, please try again later.</Text>
@@ -23,5 +23,3 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     }
 });
-
-export default ErrorMessage;

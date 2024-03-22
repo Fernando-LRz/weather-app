@@ -1,8 +1,7 @@
-import GeoDBApi from '../api/GeoDBApi';
-
+import { GeoDBApi } from '../api/GeoDBApi';
 import { CitiesGeoDBResponse, CityGeoDBResponse } from '../interfaces/CityInterfaces';
 
-const useCities = () => {
+export const useCities = () => {
 
     const getCities = async ( search: string ) => {
         try {
@@ -29,5 +28,3 @@ const useCities = () => {
         getCity
     }
 };
-
-export default useCities;

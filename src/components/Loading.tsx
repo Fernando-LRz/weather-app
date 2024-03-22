@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 
-const Loading = () => {
+export const Loading = () => {
     return (
         <View style={ styles.container }>
             <ActivityIndicator color="white" size={ 40 }/>
@@ -14,8 +14,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#2b0354'
+        backgroundColor: '#000'
     }
 });
-
-export default Loading;

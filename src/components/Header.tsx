@@ -10,7 +10,7 @@ interface Props {
     changeFocusStatus: (value: boolean) => void;
 }
 
-const Header = ({ cityName, temp, description, changeFocusStatus }: Props) => {
+export const Header = ({ cityName, temp, description, changeFocusStatus }: Props) => {
     return (
         <View>
             <Text style={ styles.headerCityName }>{ cityName }</Text>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     headerCityName: {
         textAlign: 'center',
         fontSize: 38,
-        color: 'white',
+        color: '#fff',
         fontWeight: '500',
         marginTop: 20
     },
@@ -47,10 +47,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 20,
         fontWeight: '500',
-        color: 'white',
-        opacity: 0.5,
+        color: '#fff',
         marginBottom: 25
     },
 });
-
-export default Header;

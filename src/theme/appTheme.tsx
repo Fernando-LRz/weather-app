@@ -1,18 +1,18 @@
 import { StyleSheet } from 'react-native';
 
-const appTheme = StyleSheet.create({
+export const appTheme = StyleSheet.create({
     infoBoxTitle: {
         fontSize: 18,
-        color: '#b7b5ba'
+        color: '#fff'
     },
     infoBoxLabel: {
         fontSize: 19,
-        color: '#b7b5ba',
+        color: '#fff',
         fontWeight: '700'
     },
     infoBoxData: {
         fontSize: 25,
-        color: '#b7b5ba',
+        color: '#fff',
         fontWeight: '500',
     },
     infoBox: {
@@ -20,22 +20,18 @@ const appTheme = StyleSheet.create({
         marginHorizontal: 20,
         paddingVertical: 15,
         paddingHorizontal: 20,
-        backgroundColor: '#230342',
+        backgroundColor: '#c78006',
         borderRadius: 30
     },
     backButtonText: {
         fontSize: 22,
         fontWeight: '600',
-        color: 'white'
+        color: '#fff'
     },
     backButton: {
-        backgroundColor: '#20053d',
+        backgroundColor: '#2c14de',
         paddingVertical: 15,
         paddingHorizontal: 25,
         borderRadius: 20,
-        borderWidth: 1,
-        borderColor: 'grey'
     }
 });
-
-export default appTheme;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 
-import useDebouncedValue from '../hooks/useDebouncedValue';
+import { useDebouncedValue } from '../hooks/useDebouncedValue';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -10,13 +10,13 @@ interface Props {
     onFocus: (value: boolean) => void;
 };
 
-const SearchCityInput = ({ onDebounce, onFocus }: Props) => {
+export const SearchCityInput = ({ onDebounce, onFocus }: Props) => {
 
     const [ search, setSearch ] = useState('');
     const { debouncedValue } = useDebouncedValue( search );
 
     useEffect(() => {
-        onDebounce(debouncedValue);
+        onDebounce( debouncedValue );
     }, [ debouncedValue ]);
 
     return (
@@ -24,7 +24,7 @@ const SearchCityInput = ({ onDebounce, onFocus }: Props) => {
             <View style={ styles.backgroundText }>
                 <TextInput 
                     placeholder="Search City..."
-                    placeholderTextColor="#a4a1ab"
+                    placeholderTextColor="#fff"
                     autoCapitalize="none"
                     autoCorrect={ false }
                     style={ styles.inputText }
@@ -36,7 +36,7 @@ const SearchCityInput = ({ onDebounce, onFocus }: Props) => {
                 />
                 <Icon 
                     name="search-outline"
-                    color="#a4a1ab"
+                    color="#fff"
                     size={ 30 }
                 />
             </View>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         height: 40,
         paddingHorizontal: 20,
         borderRadius: 50, 
-        backgroundColor: '#230342',
+        backgroundColor: '#302f2f',
 
         shadowColor: "#000",
         shadowOffset: {
@@ -70,9 +70,7 @@ const styles = StyleSheet.create({
     },
     inputText: {
         fontSize: 18,
-        color: '#a4a1ab',
+        color: '#fff',
         flex: 1
     }
 });
-
-export default SearchCityInput;
