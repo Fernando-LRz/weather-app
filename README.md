@@ -2,17 +2,16 @@
 Weather app built with React Native.
 
 ## Features
- * City search
- * Show weather info, such as:
-   
-   - Min temperature
-   - Max temperature
-   - Temperature
-   - Cloudiness
-   - Visibility
-   - Humidity
-   - Atmospheric pressure
-   - 5 day / 3 hour forecast
+* City search
+* Show weather info, such as:
+   - Min temperature.
+   - Max temperature.
+   - Temperature.
+   - Cloudiness.
+   - Visibility.
+   - Humidity.
+   - Atmospheric pressure.
+   - 5 day / 3 hour forecast.
  
 ## Installation
 1. Clone the repository
