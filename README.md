@@ -4,14 +4,14 @@ Weather app built with React Native.
 ## Features
 * City search
 * Show weather info, such as:
-   - Min temperature.
-   - Max temperature.
-   - Temperature.
-   - Cloudiness.
-   - Visibility.
-   - Humidity.
-   - Atmospheric pressure.
-   - 5 day / 3 hour forecast.
+   - Min temperature
+   - Max temperature
+   - Temperature
+   - Cloudiness
+   - Visibility
+   - Humidity
+   - Atmospheric pressure
+   - 5 day / 3 hour forecast
  
 ## Installation
 1. Clone the repository
@@ -28,7 +28,7 @@ npm install
 ```
 
 ## Configuration
- * A GeoDB Cities API key and an OpenWeather API key are required, both must be added to a .env file. There is a sample .env file in the project.
+A GeoDB Cities API key and an OpenWeather API key are required, both must be added to a .env file. There is a sample .env file in the project.
 
 ## Run the app
 ```bash
